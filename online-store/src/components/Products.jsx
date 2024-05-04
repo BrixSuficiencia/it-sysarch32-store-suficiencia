@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ProductsContext } from '../Global/ProductsContext';
 import { CartContext } from '../Global/CartContext';
 
@@ -6,13 +6,16 @@ export const Products = () => {
     const { products } = useContext(ProductsContext);
     const { dispatch } = useContext(CartContext);
 
+    // Memoize the products array
+    const memoizedProducts = useMemo(() => products, [products]);
+
     return (
         <>
-            {products.length !== 0 && <h1>Products</h1>}
+            {memoizedProducts.length !== 0 && <h1>Products</h1>}
             <div className='products-container'>
-                {products.length === 0 && <div>Slow internet...no products to display</div>}
-                {products.map(product => (
-                    <div className='product-card' key={`${product.ProductID}-${product.ProductName}`}>
+                {memoizedProducts.length === 0 && <div>Slow internet...no products to display</div>}
+                {memoizedProducts.map(product => (
+                    <div className='product-card' key={product.id}>
                         <div className='product-img'>
                             <img src={product.ProductImg} alt="Product" />
                         </div>
@@ -20,9 +23,9 @@ export const Products = () => {
                             {product.ProductName}
                         </div>
                         <div className='product-price'>
-                            Rs {product.ProductPrice}.00
+                            ₱ {product.ProductPrice}.00
                         </div>
-                        <button className='addcart-btn' onClick={() => dispatch({ type: 'ADD_TO_CART', id: product.ProductID, product })}>ADD TO CART</button>
+                        <button className='addcart-btn' onClick={() => dispatch({ type: 'ADD_TO_CART', id: product.id, product })}>ADD TO CART</button>
                     </div>
                 ))}
             </div>

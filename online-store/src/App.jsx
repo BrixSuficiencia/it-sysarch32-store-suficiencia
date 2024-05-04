@@ -8,7 +8,6 @@ import { NotFound } from './components/NotFound'
 import { auth, db } from './config/Config.js'
 import { CartContextProvider } from './Global/CartContext'
 import { Cart } from './components/Cart'
-import { AddProducts } from './components/AddProducts'
 import { Cashout } from './components/Cashout'
 
 export class App extends Component {
@@ -59,8 +58,6 @@ export class App extends Component {
                             <Route path="/login" element={<Login history={history} />} />
                             {/* cart products */}
                             <Route path="/cartproducts" element={<Cart user={this.state.user} />} />
-                            {/* add products */}
-                            <Route path="/addproducts" element={<AddProducts />} />
                             {/* cashout */}
                             <Route path='/cashout' element={<Cashout user={this.state.user} />} />
                             {/* NotFound */}

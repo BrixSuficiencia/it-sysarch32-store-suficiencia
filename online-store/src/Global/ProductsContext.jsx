@@ -5,38 +5,31 @@ import { db } from '../config/Config.js';
 export const ProductsContext = createContext();
 
 export class ProductsContextProvider extends React.Component {
-
     state = {
         products: []
-    }
+    };
 
     componentDidMount() {
-
-        const prevProducts = this.state.products;
         db.collection('Products').onSnapshot(snapshot => {
-            let changes = snapshot.docChanges();
-            changes.forEach(change => {
-                if (change.type === 'added') {
-                    prevProducts.push({
-                        ProductID: change.doc.id,
-                        ProductName: change.doc.data().ProductName,
-                        ProductPrice: change.doc.data().ProductPrice,
-                        ProductImg: change.doc.data().ProductImg
-                    })
-                }
-                this.setState({
-                    products: prevProducts
-                })
-            })
-        })
-
+            const products = [];
+            snapshot.forEach(doc => {
+                products.push({
+                    ProductID: doc.id,
+                    ProductName: doc.data().ProductName,
+                    ProductPrice: doc.data().ProductPrice,
+                    ProductImg: doc.data().ProductImg
+                });
+            });
+            this.setState({ products });
+        });
     }
+
     render() {
         return (
-            <ProductsContext.Provider value={{ products: [...this.state.products] }}>
+            <ProductsContext.Provider value={{ products: this.state.products }}>
                 {this.props.children}
             </ProductsContext.Provider>
-        )
+        );
     }
 }
 

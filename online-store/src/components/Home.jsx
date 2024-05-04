@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Navbar } from './Navbar';
 import { Products } from "./Products";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import Link
 import { auth } from '../config/Config.js';
 
 export const Home = ({ user }) => {

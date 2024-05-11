@@ -4,7 +4,6 @@ import { Home } from './components/Home'
 import { BrowserRouter, Route, Routes } from 'react-router-dom' // Import Route and Routes
 import { Signup } from './components/Signup'
 import { Login } from './components/Login'
-import { NotFound } from './components/NotFound'
 import { auth, db } from './config/Config.js'
 import { CartContextProvider } from './Global/CartContext'
 import { Cart } from './components/Cart'
@@ -60,8 +59,6 @@ export class App extends Component {
                             <Route path="/cartproducts" element={<Cart user={this.state.user} />} />
                             {/* cashout */}
                             <Route path='/cashout' element={<Cashout user={this.state.user} />} />
-                            {/* NotFound */}
-                            <Route path='*' element={<NotFound />} />
                         </Routes>
                     </BrowserRouter>
                 </CartContextProvider>
